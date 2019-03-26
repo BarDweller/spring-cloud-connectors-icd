@@ -45,13 +45,13 @@ public abstract class DatabasesForCloudServiceInfoCreator<SI extends ServiceInfo
             msg+="]";
         }else{
             if(o==null){
-                msg+="\"**NULL**\"";
+                msg+="\"null\"";
             }else{
                 String s = o.toString();
                 if(s.length()>16){
                     s = s.substring(0, 16);
                 }
-                msg+="\""+o.toString()+"\"";
+                msg+="\""+s+"\"";
             }
         }
         return msg;

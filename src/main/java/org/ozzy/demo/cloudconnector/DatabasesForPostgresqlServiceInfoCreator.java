@@ -24,18 +24,23 @@ public class DatabasesForPostgresqlServiceInfoCreator extends DatabasesForCloudS
         String uri = getUriFromCredentials(credentials);
 
         String cert64 = getRootCaFromCredentials(credentials);        
-        if(cert64!=null && uri.contains("ssl")){
-
+        if(cert64!=null && uri.contains("sslmode")){
+            System.out.println("**CHECKING FACTORY");
             if(!uri.contains("sslfactory")){
+                System.out.println("- ADDING FACTORY");
                 try{
                     StringBasedTrustManager.getTrustManager().addCert(Base64.getDecoder().decode(cert64));
                     if(!uri.contains("?")){
                         uri+="?sslfactory="+StringBasedSSLFactory.class.getCanonicalName();
-                    }                
+                    }else{
+                        uri+="&sslfactory="+StringBasedSSLFactory.class.getCanonicalName();
+                    }               
                 }catch(Exception e){
                     System.out.println("Add of cert failed..");
                     e.printStackTrace();
                 }
+            }else{
+                System.out.println("- FACTORY ALREADY PRESENT");
             }
 
             /**
@@ -57,6 +62,8 @@ public class DatabasesForPostgresqlServiceInfoCreator extends DatabasesForCloudS
             }
             */
         }
+
+        System.out.println("Building PostgresqlServiceInfo with id "+id+" and uri "+uri);
         return new PostgresqlServiceInfo(id, uri);
 	}
 }
