@@ -14,8 +14,6 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
-import org.postgresql.util.GT;
-
 public class StringBasedTrustManager implements X509TrustManager {
         private KeyStore ks;
         private X509Certificate cert;
@@ -32,7 +30,7 @@ public class StringBasedTrustManager implements X509TrustManager {
             }
           }
           if (trustManager == null) {
-            throw new GeneralSecurityException(GT.tr("No X509TrustManager found"));
+            throw new GeneralSecurityException("No X509TrustManager found");
           }
         }
     
