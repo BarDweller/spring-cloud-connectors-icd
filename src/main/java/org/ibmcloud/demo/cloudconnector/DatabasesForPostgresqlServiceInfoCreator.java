@@ -1,12 +1,7 @@
-package org.ozzy.demo.cloudconnector;
+package org.ibmcloud.demo.cloudconnector;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.Base64;
 import java.util.Map;
-
 
 import org.springframework.cloud.service.common.PostgresqlServiceInfo;
 
@@ -25,9 +20,7 @@ public class DatabasesForPostgresqlServiceInfoCreator extends DatabasesForCloudS
 
         String cert64 = getRootCaFromCredentials(credentials);        
         if(cert64!=null && uri.contains("sslmode")){
-            System.out.println("**CHECKING FACTORY");
             if(!uri.contains("sslfactory")){
-                System.out.println("- ADDING FACTORY");
                 try{
                     StringBasedTrustManager.getTrustManager().addCert(Base64.getDecoder().decode(cert64));
                     if(!uri.contains("?")){
@@ -40,27 +33,8 @@ public class DatabasesForPostgresqlServiceInfoCreator extends DatabasesForCloudS
                     e.printStackTrace();
                 }
             }else{
-                System.out.println("- FACTORY ALREADY PRESENT");
+                System.out.println("sslfactory already present in postgresql, not adding custom handler. Expect truststore issues.");
             }
-
-            /**
-            String homepath = System.getProperty("user.home");
-            Path homedir = Paths.get(homepath);
-            Path target = homedir.resolve(".postgresql/root.crt");
-            //ignore if there's already a root.crt somehow.
-            if(!Files.exists(target)){
-                try{
-                    byte []certdata = Base64.getDecoder().decode(cert64);
-                    //create dir if doesn't exist yet
-                    Files.createDirectories(target.getParent());
-                    //write content to root.crt file.
-                    Files.write(target, certdata, StandardOpenOption.CREATE);
-                }catch(Exception e){
-                    e.printStackTrace();
-                    System.out.println("Failed to create cert, "+e.getMessage()+" "+e.getClass().getCanonicalName());
-                }
-            }
-            */
         }
 
         System.out.println("Building PostgresqlServiceInfo with id "+id+" and uri "+uri);
