@@ -23,8 +23,22 @@ public class DatabasesForPostgresqlServiceInfoCreator extends DatabasesForCloudS
 		Map<String,Object> credentials = getCredentials(serviceData);
         String uri = getUriFromCredentials(credentials);
 
-        String cert64 = getRootCaFromCredentials(credentials);
-        if(cert64!=null){
+        String cert64 = getRootCaFromCredentials(credentials);        
+        if(cert64!=null && uri.contains("ssl")){
+
+            if(!uri.contains("sslfactory")){
+                try{
+                    StringBasedTrustManager.getTrustManager().addCert(Base64.getDecoder().decode(cert64));
+                    if(!uri.contains("?")){
+                        uri+="?sslfactory="+StringBasedSSLFactory.class.getCanonicalName();
+                    }                
+                }catch(Exception e){
+                    System.out.println("Add of cert failed..");
+                    e.printStackTrace();
+                }
+            }
+
+            /**
             String homepath = System.getProperty("user.home");
             Path homedir = Paths.get(homepath);
             Path target = homedir.resolve(".postgresql/root.crt");
@@ -41,6 +55,7 @@ public class DatabasesForPostgresqlServiceInfoCreator extends DatabasesForCloudS
                     System.out.println("Failed to create cert, "+e.getMessage()+" "+e.getClass().getCanonicalName());
                 }
             }
+            */
         }
         return new PostgresqlServiceInfo(id, uri);
 	}
