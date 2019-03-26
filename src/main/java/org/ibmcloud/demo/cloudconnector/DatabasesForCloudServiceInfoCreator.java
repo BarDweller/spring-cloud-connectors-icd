@@ -1,4 +1,4 @@
-package org.ozzy.demo.cloudconnector;
+package org.ibmcloud.demo.cloudconnector;
 
 import java.util.List;
 import java.util.Map;
