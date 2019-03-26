@@ -28,13 +28,13 @@ We use jitpack to build this library, which means you can direct maven or gradle
     <dependency>
       <groupId>com.github.bardweller</groupId>
       <artifactId>spring-cloud-connectors-icd</artifactId>
-      <version>v0.1</version>
+      <version>v0.2</version>
     </dependency>
   ```
   * In gradle:
   ```
     dependencies {
-	    compile 'com.github.bardweller:spring-cloud-connectors-icd:v0.1'
+	    compile 'com.github.bardweller:spring-cloud-connectors-icd:v0.2'
     }
   ```
 
