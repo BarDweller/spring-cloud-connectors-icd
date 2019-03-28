@@ -27,7 +27,6 @@ public class DatabasesForMongodbCreator extends AbstractServiceConnectorCreator<
             if(cert!=null){
                     try{
                         StringBasedTrustManager.getTrustManager().addCert(cert);
-                        
                     }catch(Exception e){
                         System.out.println("Add of cert failed..");
                         e.printStackTrace();
@@ -60,8 +59,11 @@ public class DatabasesForMongodbCreator extends AbstractServiceConnectorCreator<
                     uri+=",";
                 }
                 uri+=s.substring(schemelen, s.indexOf("/", schemelen+1));
+                System.out.println("DEBUG: interim uri "+uri);
             }
+            System.out.println("DEBUG: penultimate uri "+uri);
             uri += uris.get(0).substring(uris.get(0).indexOf("/", schemelen+1));
+            System.out.println("DEBUG: final uri "+uri);
             return uri;
         }
     }
@@ -74,7 +76,6 @@ public class DatabasesForMongodbCreator extends AbstractServiceConnectorCreator<
 
 	private MongoClientOptions.Builder getMongoOptions(MongoDbFactoryConfig config) {
 		MongoClientOptions.Builder builder = MongoClientOptions.builder();
-
 		if (config != null) {
 			if (config.getConnectionsPerHost() != null) {
 				builder.connectionsPerHost(config.getConnectionsPerHost());
@@ -86,7 +87,6 @@ public class DatabasesForMongodbCreator extends AbstractServiceConnectorCreator<
 				builder.writeConcern(new WriteConcern(config.getWriteConcern()));
 			}
 		}
-
 		return builder;
 	}
 
