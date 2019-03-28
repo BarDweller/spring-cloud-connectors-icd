@@ -55,12 +55,14 @@ public class DatabasesForMongodbCreator extends AbstractServiceConnectorCreator<
             int schemelen = uri.length();
             boolean first = true;
             for(String s : uris) {
+                int start = schemelen;
                 if(!first){
                     uri+=",";
+                    start+=s.indexOf("@", schemelen+1);
                 }else{
                     first=false;
                 }
-                uri+=s.substring(schemelen, s.indexOf("/", schemelen+1));
+                uri+=s.substring(start, s.indexOf("/", schemelen+1));
                 System.out.println("DEBUG: interim uri "+uri);
             }
             System.out.println("DEBUG: penultimate uri "+uri);
