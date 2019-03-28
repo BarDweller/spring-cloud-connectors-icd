@@ -58,7 +58,7 @@ public class DatabasesForMongodbCreator extends AbstractServiceConnectorCreator<
                 int start = schemelen;
                 if(!first){
                     uri+=",";
-                    start+=s.indexOf("@", schemelen+1);
+                    start=s.indexOf("@", schemelen+1);
                 }else{
                     first=false;
                 }

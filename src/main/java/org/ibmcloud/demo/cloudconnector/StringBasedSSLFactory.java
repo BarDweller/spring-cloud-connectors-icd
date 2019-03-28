@@ -35,6 +35,10 @@ public class StringBasedSSLFactory extends SSLSocketFactory {
         throws IOException {
       return factory.createSocket(socket, host, port, autoClose);
     }
+
+    public Socket createSocket() throws IOException {
+      return factory.createSocket();
+    }
   
     public String[] getDefaultCipherSuites() {
       return factory.getDefaultCipherSuites();
