@@ -50,16 +50,21 @@ public abstract class DatabasesForCloudServiceInfoCreator<SI extends ServiceInfo
 		return (String) serviceData.get("name");
     }
 
-	protected String getUriFromCredentials(Map<String, Object> credentials) {
+	protected List<String> getUrisFromCredentials(Map<String, Object> credentials) {
         Map<String,Object> connection = (Map<String, Object>) credentials.get("connection");
         if(connection!=null){
             Map<String,Object> details = (Map<String, Object>) connection.get(connectionName);
             if(details!=null){
                 List<String>uris = (List<String>)details.get("composed");
-                return uris.get(0);
+                return uris;
             }
         }
 		return null;
+    }
+
+
+	protected String getUriFromCredentials(Map<String, Object> credentials) {
+		return getUrisFromCredentials(credentials).get(0);
     }
 
 	protected String getRootCaFromCredentials(Map<String, Object> credentials) {
