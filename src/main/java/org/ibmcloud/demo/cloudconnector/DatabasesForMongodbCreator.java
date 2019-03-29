@@ -8,7 +8,9 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoException;
+import com.mongodb.MongoSocketException;
 import com.mongodb.WriteConcern;
+import com.mongodb.client.MongoDatabase;
 
 import org.springframework.cloud.service.AbstractServiceConnectorCreator;
 import org.springframework.cloud.service.ServiceConnectorConfig;
@@ -36,7 +38,13 @@ public class DatabasesForMongodbCreator extends AbstractServiceConnectorCreator<
 
             SimpleMongoDbFactory mongoDbFactory = createMongoDbFactory(serviceInfo, mongoOptionsToUse);
 
-            return configure(mongoDbFactory, (MongoDbFactoryConfig) config);
+            MongoDbFactory f = configure(mongoDbFactory, (MongoDbFactoryConfig) config);
+            try{
+                MongoDatabase db = f.getDb();
+            }catch(MongoSocketException e){
+                System.out.println("** MSE **"+e.getMessage());
+            }
+            return f;
         } catch (UnknownHostException e) {
             throw new ServiceConnectorCreationException(e);
         } catch (MongoException e) {
