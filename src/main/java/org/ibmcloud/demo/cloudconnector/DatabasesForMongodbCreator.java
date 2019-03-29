@@ -67,6 +67,13 @@ public class DatabasesForMongodbCreator extends AbstractServiceConnectorCreator<
             }
             System.out.println("DEBUG: penultimate uri "+uri);
             uri += uris.get(0).substring(uris.get(0).indexOf("/", schemelen+1));
+            if(!uri.contains("replica_set=")){
+                if(uri.contains("?")){
+                    uri += "&replica_set=replset";
+                }else{
+                    uri += "?replica_set=replset";
+                }
+            }
             System.out.println("DEBUG: final uri "+uri);
             return uri;
         }
