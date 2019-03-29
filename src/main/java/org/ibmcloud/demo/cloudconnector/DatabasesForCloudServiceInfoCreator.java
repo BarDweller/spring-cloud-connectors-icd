@@ -71,9 +71,9 @@ public abstract class DatabasesForCloudServiceInfoCreator<SI extends ServiceInfo
         if(connection!=null){
             Map<String,Object> details = (Map<String, Object>) connection.get(connectionName);
             if(details!=null){
-                Map<String, Object> hosts =  (Map<String, Object>) details.get("hosts");
+                List<Map<String, Object>> hosts =  (List<Map<String, Object>>) details.get("hosts");
                 if(hosts!=null){
-                    Object h = hosts.get("hostname");
+                    Object h = hosts.get(0).get("hostname");
                     if(h!=null) return h.toString();
                 }
             }
@@ -85,9 +85,9 @@ public abstract class DatabasesForCloudServiceInfoCreator<SI extends ServiceInfo
         if(connection!=null){
             Map<String,Object> details = (Map<String, Object>) connection.get(connectionName);
             if(details!=null){
-                Map<String, Object> hosts[] =  (Map<String, Object>[]) details.get("hosts");
+                List<Map<String, Object>> hosts =  (List<Map<String, Object>>) details.get("hosts");
                 if(hosts!=null){
-                    Object h = hosts[0].get("port");
+                    Object h = hosts.get(0).get("port");
                     if(h!=null) return h.toString();
                 }
             }
@@ -99,9 +99,9 @@ public abstract class DatabasesForCloudServiceInfoCreator<SI extends ServiceInfo
         if(connection!=null){
             Map<String,Object> details = (Map<String, Object>) connection.get(connectionName);
             if(details!=null){
-                Map<String, Object> hosts[] =  (Map<String, Object>[]) details.get("hosts");
+                List<Map<String, Object>> hosts =  (List<Map<String, Object>>) details.get("hosts");
                 if(hosts!=null){
-                    Object h = hosts[0].get("protocol");
+                    Object h = hosts.get(0).get("protocol");
                     if(h!=null) return h.toString();
                 }
             }
