@@ -1,1 +1,2 @@
 org.ibmcloud.demo.cloudconnector.DatabasesForMongodbCreator
+org.ibmcloud.demo.cloudconnector.DatabasesForRedisCreator
