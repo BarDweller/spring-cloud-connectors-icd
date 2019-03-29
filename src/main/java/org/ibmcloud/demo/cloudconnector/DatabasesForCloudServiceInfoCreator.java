@@ -62,10 +62,66 @@ public abstract class DatabasesForCloudServiceInfoCreator<SI extends ServiceInfo
 		return null;
     }
 
-
 	protected String getUriFromCredentials(Map<String, Object> credentials) {
 		return getUrisFromCredentials(credentials).get(0);
     }
+
+    protected String getHostFromCredentials(Map<String, Object> credentials) {
+        Map<String,Object> connection = (Map<String, Object>) credentials.get("connection");
+        if(connection!=null){
+            Map<String,Object> details = (Map<String, Object>) connection.get(connectionName);
+            if(details!=null){
+                Map<String, Object> hosts =  (Map<String, Object>) details.get("hosts");
+                if(hosts!=null){
+                    Object h = hosts.get("hostname");
+                    if(h!=null) return h.toString();
+                }
+            }
+        }
+		return null;
+    }
+    protected String getPortFromCredentials(Map<String, Object> credentials) {
+        Map<String,Object> connection = (Map<String, Object>) credentials.get("connection");
+        if(connection!=null){
+            Map<String,Object> details = (Map<String, Object>) connection.get(connectionName);
+            if(details!=null){
+                Map<String, Object> hosts =  (Map<String, Object>) details.get("hosts");
+                if(hosts!=null){
+                    Object h = hosts.get("port");
+                    if(h!=null) return h.toString();
+                }
+            }
+        }
+		return null;
+    }
+    protected String getSchemeFromCredentials(Map<String, Object> credentials) {
+        Map<String,Object> connection = (Map<String, Object>) credentials.get("connection");
+        if(connection!=null){
+            Map<String,Object> details = (Map<String, Object>) connection.get(connectionName);
+            if(details!=null){
+                Map<String, Object> hosts =  (Map<String, Object>) details.get("hosts");
+                if(hosts!=null){
+                    Object h = hosts.get("protocol");
+                    if(h!=null) return h.toString();
+                }
+            }
+        }
+		return null;
+    }  
+    protected String getPasswordFromCredentials(Map<String, Object> credentials) {
+        Map<String,Object> connection = (Map<String, Object>) credentials.get("connection");
+        if(connection!=null){
+            Map<String,Object> details = (Map<String, Object>) connection.get(connectionName);
+            if(details!=null){
+                Map<String, Object> auth =  (Map<String, Object>) details.get("authentication");
+                if(auth!=null){
+                    Object h = auth.get("password");
+                    if(h!=null) return h.toString();
+                }
+            }
+        }
+		return null;
+    }          
 
 	protected String getRootCaFromCredentials(Map<String, Object> credentials) {
         Map<String,Object> connection = (Map<String, Object>) credentials.get("connection");
