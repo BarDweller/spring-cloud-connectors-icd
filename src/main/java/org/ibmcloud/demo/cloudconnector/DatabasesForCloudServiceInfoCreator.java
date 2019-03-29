@@ -85,9 +85,9 @@ public abstract class DatabasesForCloudServiceInfoCreator<SI extends ServiceInfo
         if(connection!=null){
             Map<String,Object> details = (Map<String, Object>) connection.get(connectionName);
             if(details!=null){
-                Map<String, Object> hosts =  (Map<String, Object>) details.get("hosts");
+                Map<String, Object> hosts[] =  (Map<String, Object>[]) details.get("hosts");
                 if(hosts!=null){
-                    Object h = hosts.get("port");
+                    Object h = hosts[0].get("port");
                     if(h!=null) return h.toString();
                 }
             }
@@ -99,9 +99,9 @@ public abstract class DatabasesForCloudServiceInfoCreator<SI extends ServiceInfo
         if(connection!=null){
             Map<String,Object> details = (Map<String, Object>) connection.get(connectionName);
             if(details!=null){
-                Map<String, Object> hosts =  (Map<String, Object>) details.get("hosts");
+                Map<String, Object> hosts[] =  (Map<String, Object>[]) details.get("hosts");
                 if(hosts!=null){
-                    Object h = hosts.get("protocol");
+                    Object h = hosts[0].get("protocol");
                     if(h!=null) return h.toString();
                 }
             }
